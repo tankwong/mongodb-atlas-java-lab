@@ -81,7 +81,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Connection" -Dmon
 3.  Output example:
 ```
 ```
-### X - <Topics>
+### X - Topics
 1.  Java code
 ```
 ```
