@@ -26,7 +26,7 @@ This objective of this lab is to demostrate the following:
 ## Steps
 
 ### 1 - Connecting to Atlas & list all databases
-1.  Java code
+1.  Java class Connection
 ```
 package com.mongodb.quickstart;
 
@@ -69,18 +69,108 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Connection" -Dmon
 {"name": "local", "sizeOnDisk": 1525587968, "empty": false}
 ```
 
-### 2 - Insert Operations
-1.  Java code
+### 2 - Insert Operations of 1 and many documents
+1.  Java class Create
 ```
+package com.mongodb.quickstart;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.InsertManyOptions;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import static java.util.Arrays.asList;
+
+public class Create {
+
+    private static final Random rand = new Random();
+
+    public static void main(String[] args) {
+        try (MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"))) {
+
+            MongoDatabase sampleTrainingDB = mongoClient.getDatabase("sample_training");
+            MongoCollection<Document> gradesCollection = sampleTrainingDB.getCollection("grades");
+
+            insertOneDocument(gradesCollection);
+            insertManyDocuments(gradesCollection);
+        }
+    }
+
+    private static void insertOneDocument(MongoCollection<Document> gradesCollection) {
+        gradesCollection.insertOne(generateNewGrade(10000d, 1d));
+        System.out.println("One grade inserted for studentId 10000.");
+    }
+
+    private static void insertManyDocuments(MongoCollection<Document> gradesCollection) {
+        List<Document> grades = new ArrayList<>();
+        for (double classId = 1d; classId <= 10d; classId++) {
+            grades.add(generateNewGrade(10001d, classId));
+        }
+
+        gradesCollection.insertMany(grades, new InsertManyOptions().ordered(false));
+        System.out.println("Ten grades inserted for studentId 10001.");
+    }
+
+    private static Document generateNewGrade(double studentId, double classId) {
+        List<Document> scores = asList(new Document("type", "exam").append("score", rand.nextDouble() * 100),
+                                       new Document("type", "quiz").append("score", rand.nextDouble() * 100),
+                                       new Document("type", "homework").append("score", rand.nextDouble() * 100),
+                                       new Document("type", "homework").append("score", rand.nextDouble() * 100));
+        return new Document("_id", new ObjectId()).append("student_id", studentId)
+                                                  .append("class_id", classId)
+                                                  .append("scores", scores);
+    }
+}
 ```
 
 2.  Run this example command/class to execute:
 ```
+mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Create" -Dmongodb.uri="mongodb+srv://USERNAME:PASSWORD@wt-cluster-0.k0k8u7u.mongodb.net/test?w=majority" -Dexec.cleanupDaemonThreads=false
 ```
 
 3.  Output example:
 ```
+{
+    "_id": {
+        "$oid": "5d97c375ded5651ea3462d0f"
+    },
+    "student_id": {
+        "$numberDouble": "10000"
+    },
+    "class_id": {
+        "$numberDouble": "1"
+    },
+    "scores": [{
+        "type": "exam",
+        "score": {
+            "$numberDouble": "4.615256396625178"
+        }
+    }, {
+        "type": "quiz",
+        "score": {
+            "$numberDouble": "73.06173415145801"
+        }
+    }, {
+        "type": "homework",
+        "score": {
+            "$numberDouble": "19.378205578990727"
+        }
+    }, {
+        "type": "homework",
+        "score": {
+            "$numberDouble": "82.3089189278531"
+        }
+    }]
+}
 ```
+
 ### X - Topics
 1.  Java code
 ```
