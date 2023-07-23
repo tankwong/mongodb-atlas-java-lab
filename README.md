@@ -312,7 +312,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 
 17:02:52.502 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.operation - Received batch of 1 documents with cursorId 0 from server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
-**Student 1: {"_id": {"$oid": "64bce76d77d04766ae0279a6"}, "student_id": 10000.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 14.079652517497598}, {"type": "quiz", "score": 70.22611310417194}, {"type": "homework", "score": 37.2895109669653}, {"type": "homework", "score": 46.66607584649181}]}**
+Student 1: {"_id": {"$oid": "64bce76d77d04766ae0279a6"}, "student_id": 10000.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 14.079652517497598}, {"type": "quiz", "score": 70.22611310417194}, {"type": "homework", "score": 37.2895109669653}, {"type": "homework", "score": 46.66607584649181}]}
 
 17:02:52.505 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.protocol.command - Sending command '{"find": "grades", "filter": {"student_id": 10000}, "limit": 1, "singleBatch": true, "$db": "sample_training", "$clusterTime": {"clusterTime": {"$timestamp": {"t": 1690102972, "i": 5}}, "signature": {"hash": {"$binary": {"base64": "GQqir5kU3CUj+58UBzCIWLcHiBE=", "subType": "00"}}, "keyId": 7204913235105939459}}, "lsid": {"id": {"$binary": {"base64": "VUiFpT8IQ3eh4OS+Cn2YCQ==", "subType": "04"}}}}' with request id 14 to database sample_training on connection [connectionId{localValue:7, serverValue:60850}] to server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
@@ -320,7 +320,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 
 17:02:52.579 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.operation - Received batch of 1 documents with cursorId 0 from server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
-**Student 2: {"_id": {"$oid": "64bce76d77d04766ae0279a6"}, "student_id": 10000.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 14.079652517497598}, {"type": "quiz", "score": 70.22611310417194}, {"type": "homework", "score": 37.2895109669653}, {"type": "homework", "score": 46.66607584649181}]}**
+Student 2: {"_id": {"$oid": "64bce76d77d04766ae0279a6"}, "student_id": 10000.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 14.079652517497598}, {"type": "quiz", "score": 70.22611310417194}, {"type": "homework", "score": 37.2895109669653}, {"type": "homework", "score": 46.66607584649181}]}
 
 17:02:52.581 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.protocol.command - Sending command '{"find": "grades", "filter": {"student_id": {"$gte": 10000}}, "$db": "sample_training", "$clusterTime": {"clusterTime": {"$timestamp": {"t": 1690102972, "i": 6}}, "signature": {"hash": {"$binary": {"base64": "GQqir5kU3CUj+58UBzCIWLcHiBE=", "subType": "00"}}, "keyId": 7204913235105939459}}, "lsid": {"id": {"$binary": {"base64": "VUiFpT8IQ3eh4OS+Cn2YCQ==", "subType": "04"}}}}' with request id 15 to database sample_training on connection [connectionId{localValue:7, serverValue:60850}] to server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
@@ -328,7 +328,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 
 17:02:52.653 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.operation - Received batch of 11 documents with cursorId 0 from server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
-**Student list with a cursor: 
+Student list with a cursor: 
 {"_id": {"$oid": "64bce76d77d04766ae0279a6"}, "student_id": 10000.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 14.079652517497598}, {"type": "quiz", "score": 70.22611310417194}, {"type": "homework", "score": 37.2895109669653}, {"type": "homework", "score": 46.66607584649181}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279a7"}, "student_id": 10001.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 76.96524467076867}, {"type": "quiz", "score": 11.345904851219856}, {"type": "homework", "score": 87.39046137565815}, {"type": "homework", "score": 92.05678952967556}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279a8"}, "student_id": 10001.0, "class_id": 2.0, "scores": [{"type": "exam", "score": 1.8242079171403525}, {"type": "quiz", "score": 67.81826548413564}, {"type": "homework", "score": 46.92395147869989}, {"type": "homework", "score": 3.569053699590341}]}
@@ -339,7 +339,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 {"_id": {"$oid": "64bce76d77d04766ae0279ad"}, "student_id": 10001.0, "class_id": 7.0, "scores": [{"type": "exam", "score": 86.40205932698721}, {"type": "quiz", "score": 16.569444160278845}, {"type": "homework", "score": 25.966745021851466}, {"type": "homework", "score": 19.799725100634014}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279ae"}, "student_id": 10001.0, "class_id": 8.0, "scores": [{"type": "exam", "score": 98.7626864502663}, {"type": "quiz", "score": 51.47876004911579}, {"type": "homework", "score": 49.03421526601378}, {"type": "homework", "score": 59.653247345124285}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279af"}, "student_id": 10001.0, "class_id": 9.0, "scores": [{"type": "exam", "score": 70.76134870427505}, {"type": "quiz", "score": 37.234398099846054}, {"type": "homework", "score": 37.446081418249356}, {"type": "homework", "score": 81.15671598953026}]}
-{"_id": {"$oid": "64bce76d77d04766ae0279b0"}, "student_id": 10001.0, "class_id": 10.0, "scores": [{"type": "exam", "score": 24.85530175324817}, {"type": "quiz", "score": 90.35688441920536}, {"type": "homework", "score": 73.80404539980042}, {"type": "homework", "score": 30.600737493610232}]}**
+{"_id": {"$oid": "64bce76d77d04766ae0279b0"}, "student_id": 10001.0, "class_id": 10.0, "scores": [{"type": "exam", "score": 24.85530175324817}, {"type": "quiz", "score": 90.35688441920536}, {"type": "homework", "score": 73.80404539980042}, {"type": "homework", "score": 30.600737493610232}]}
 
 17:02:52.658 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.protocol.command - Sending command '{"find": "grades", "filter": {"student_id": {"$gte": 10000}}, "$db": "sample_training", "$clusterTime": {"clusterTime": {"$timestamp": {"t": 1690102972, "i": 6}}, "signature": {"hash": {"$binary": {"base64": "GQqir5kU3CUj+58UBzCIWLcHiBE=", "subType": "00"}}, "keyId": 7204913235105939459}}, "lsid": {"id": {"$binary": {"base64": "VUiFpT8IQ3eh4OS+Cn2YCQ==", "subType": "04"}}}}' with request id 16 to database sample_training on connection [connectionId{localValue:7, serverValue:60850}] to server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
@@ -347,7 +347,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 
 17:02:52.730 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.operation - Received batch of 11 documents with cursorId 0 from server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
-**Student list with an ArrayList:
+Student list with an ArrayList:
 {"_id": {"$oid": "64bce76d77d04766ae0279a6"}, "student_id": 10000.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 14.079652517497598}, {"type": "quiz", "score": 70.22611310417194}, {"type": "homework", "score": 37.2895109669653}, {"type": "homework", "score": 46.66607584649181}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279a7"}, "student_id": 10001.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 76.96524467076867}, {"type": "quiz", "score": 11.345904851219856}, {"type": "homework", "score": 87.39046137565815}, {"type": "homework", "score": 92.05678952967556}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279a8"}, "student_id": 10001.0, "class_id": 2.0, "scores": [{"type": "exam", "score": 1.8242079171403525}, {"type": "quiz", "score": 67.81826548413564}, {"type": "homework", "score": 46.92395147869989}, {"type": "homework", "score": 3.569053699590341}]}
@@ -358,9 +358,9 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 {"_id": {"$oid": "64bce76d77d04766ae0279ad"}, "student_id": 10001.0, "class_id": 7.0, "scores": [{"type": "exam", "score": 86.40205932698721}, {"type": "quiz", "score": 16.569444160278845}, {"type": "homework", "score": 25.966745021851466}, {"type": "homework", "score": 19.799725100634014}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279ae"}, "student_id": 10001.0, "class_id": 8.0, "scores": [{"type": "exam", "score": 98.7626864502663}, {"type": "quiz", "score": 51.47876004911579}, {"type": "homework", "score": 49.03421526601378}, {"type": "homework", "score": 59.653247345124285}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279af"}, "student_id": 10001.0, "class_id": 9.0, "scores": [{"type": "exam", "score": 70.76134870427505}, {"type": "quiz", "score": 37.234398099846054}, {"type": "homework", "score": 37.446081418249356}, {"type": "homework", "score": 81.15671598953026}]}
-{"_id": {"$oid": "64bce76d77d04766ae0279b0"}, "student_id": 10001.0, "class_id": 10.0, "scores": [{"type": "exam", "score": 24.85530175324817}, {"type": "quiz", "score": 90.35688441920536}, {"type": "homework", "score": 73.80404539980042}, {"type": "homework", "score": 30.600737493610232}]}**
+{"_id": {"$oid": "64bce76d77d04766ae0279b0"}, "student_id": 10001.0, "class_id": 10.0, "scores": [{"type": "exam", "score": 24.85530175324817}, {"type": "quiz", "score": 90.35688441920536}, {"type": "homework", "score": 73.80404539980042}, {"type": "homework", "score": 30.600737493610232}]}
 
-**Student list using a Consumer:**
+Student list using a Consumer:
 
 17:02:52.734 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.protocol.command - Sending command '{"find": "grades", "filter": {"student_id": {"$gte": 10000}}, "$db": "sample_training", "$clusterTime": {"clusterTime": {"$timestamp": {"t": 1690102972, "i": 7}}, "signature": {"hash": {"$binary": {"base64": "GQqir5kU3CUj+58UBzCIWLcHiBE=", "subType": "00"}}, "keyId": 7204913235105939459}}, "lsid": {"id": {"$binary": {"base64": "VUiFpT8IQ3eh4OS+Cn2YCQ==", "subType": "04"}}}}' with request id 17 to database sample_training on connection [connectionId{localValue:7, serverValue:60850}] to server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
@@ -368,7 +368,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 
 17:02:52.805 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.operation - Received batch of 11 documents with cursorId 0 from server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
-**{"_id": {"$oid": "64bce76d77d04766ae0279a6"}, "student_id": 10000.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 14.079652517497598}, {"type": "quiz", "score": 70.22611310417194}, {"type": "homework", "score": 37.2895109669653}, {"type": "homework", "score": 46.66607584649181}]}
+{"_id": {"$oid": "64bce76d77d04766ae0279a6"}, "student_id": 10000.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 14.079652517497598}, {"type": "quiz", "score": 70.22611310417194}, {"type": "homework", "score": 37.2895109669653}, {"type": "homework", "score": 46.66607584649181}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279a7"}, "student_id": 10001.0, "class_id": 1.0, "scores": [{"type": "exam", "score": 76.96524467076867}, {"type": "quiz", "score": 11.345904851219856}, {"type": "homework", "score": 87.39046137565815}, {"type": "homework", "score": 92.05678952967556}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279a8"}, "student_id": 10001.0, "class_id": 2.0, "scores": [{"type": "exam", "score": 1.8242079171403525}, {"type": "quiz", "score": 67.81826548413564}, {"type": "homework", "score": 46.92395147869989}, {"type": "homework", "score": 3.569053699590341}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279a9"}, "student_id": 10001.0, "class_id": 3.0, "scores": [{"type": "exam", "score": 27.23629156867068}, {"type": "quiz", "score": 24.762607718023844}, {"type": "homework", "score": 40.096701904514106}, {"type": "homework", "score": 91.39630184044661}]}
@@ -378,7 +378,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 {"_id": {"$oid": "64bce76d77d04766ae0279ad"}, "student_id": 10001.0, "class_id": 7.0, "scores": [{"type": "exam", "score": 86.40205932698721}, {"type": "quiz", "score": 16.569444160278845}, {"type": "homework", "score": 25.966745021851466}, {"type": "homework", "score": 19.799725100634014}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279ae"}, "student_id": 10001.0, "class_id": 8.0, "scores": [{"type": "exam", "score": 98.7626864502663}, {"type": "quiz", "score": 51.47876004911579}, {"type": "homework", "score": 49.03421526601378}, {"type": "homework", "score": 59.653247345124285}]}
 {"_id": {"$oid": "64bce76d77d04766ae0279af"}, "student_id": 10001.0, "class_id": 9.0, "scores": [{"type": "exam", "score": 70.76134870427505}, {"type": "quiz", "score": 37.234398099846054}, {"type": "homework", "score": 37.446081418249356}, {"type": "homework", "score": 81.15671598953026}]}
-{"_id": {"$oid": "64bce76d77d04766ae0279b0"}, "student_id": 10001.0, "class_id": 10.0, "scores": [{"type": "exam", "score": 24.85530175324817}, {"type": "quiz", "score": 90.35688441920536}, {"type": "homework", "score": 73.80404539980042}, {"type": "homework", "score": 30.600737493610232}]}**
+{"_id": {"$oid": "64bce76d77d04766ae0279b0"}, "student_id": 10001.0, "class_id": 10.0, "scores": [{"type": "exam", "score": 24.85530175324817}, {"type": "quiz", "score": 90.35688441920536}, {"type": "homework", "score": 73.80404539980042}, {"type": "homework", "score": 30.600737493610232}]}
 
 17:02:52.810 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.protocol.command - Sending command '{"find": "grades", "filter": {"$and": [{"student_id": 10001}, {"class_id": {"$lte": 5}}]}, "sort": {"class_id": -1}, "projection": {"_id": 0, "class_id": 1, "student_id": 1}, "skip": 2, "limit": 2, "$db": "sample_training", "$clusterTime": {"clusterTime": {"$timestamp": {"t": 1690102972, "i": 9}}, "signature": {"hash": {"$binary": {"base64": "GQqir5kU3CUj+58UBzCIWLcHiBE=", "subType": "00"}}, "keyId": 7204913235105939459}}, "lsid": {"id": {"$binary": {"base64": "VUiFpT8IQ3eh4OS+Cn2YCQ==", "subType": "04"}}}}' with request id 18 to database sample_training on connection [connectionId{localValue:7, serverValue:60850}] to server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
@@ -386,7 +386,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 
 17:02:52.886 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.operation - Received batch of 2 documents with cursorId 0 from server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
 
-**Student sorted, skipped, limited and projected: 
+Student sorted, skipped, limited and projected: 
 {"student_id": 10001.0, "class_id": 3.0}
 {"student_id": 10001.0, "class_id": 2.0}
 17:02:52.887 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.protocol.command - Sending command '{"endSessions": [{"id": {"$binary": {"base64": "VUiFpT8IQ3eh4OS+Cn2YCQ==", "subType": "04"}}}], "$db": "admin", "$clusterTime": {"clusterTime": {"$timestamp": {"t": 1690102972, "i": 10}}, "signature": {"hash": {"$binary": {"base64": "GQqir5kU3CUj+58UBzCIWLcHiBE=", "subType": "00"}}, "keyId": 7204913235105939459}}, "$readPreference": {"mode": "primaryPreferred"}}' with request id 19 to database admin on connection [connectionId{localValue:7, serverValue:60850}] to server ac-bszzhwt-shard-00-01.k0k8u7u.mongodb.net:27017
@@ -398,7 +398,7 @@ mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Read" -Dmongodb.u
 17:02:52.905 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:1, serverValue:60850}
 17:02:52.905 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:3, serverValue:60839}
 17:02:52.913 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:6, serverValue:57195}
-17:02:52.913 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:4, serverValue:57194}**
+17:02:52.913 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:4, serverValue:57194}
 ```
 
 ### X - Read operations 
