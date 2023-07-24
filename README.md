@@ -13,7 +13,7 @@ This objective of this lab is to demostrate the following:
     - Intellij IDEA CE 2023.1.4
     - Visual Studio Code version 1.80.1 (Universal)
     - [MongoDB Atlas Sample Datasets](https://www.mongodb.com/developer/products/atlas/atlas-sample-datasets/)
-    - MongoDB Atlas connection string:  ```mongodb+srv://<admin_id>:<password>@wt-cluster-0.k0k8u7u.mongodb.net/?retryWrites=true&w=majority```
+    - MongoDB Atlas connection string:  ```mongodb+srv://USERNAME:PASSWORD@wt-cluster-0.k0k8u7u.mongodb.net/?retryWrites=true&w=majority```
       
 2.  Compiling Java
     - To compile a specific .java, in the root/src folder of the java folder, run the following command in command shell/CLI: ```mvn compile exec:java -Dexec.mainClass="<.java path>"``` e.g. ```mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.HelloMongoDB"```
@@ -401,7 +401,260 @@ Student sorted, skipped, limited and projected:
 17:02:52.913 [com.mongodb.quickstart.Read.main()] DEBUG org.mongodb.driver.connection - Closing connection connectionId{localValue:4, serverValue:57194}
 ```
 
-### X - Read operations 
+### 4 - Update operations of 1 and multiple documents, upsert and findOneAndUpdate of 1 document
+1.  Java code
+```
+package com.mongodb.quickstart;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
+import com.mongodb.client.model.ReturnDocument;
+import com.mongodb.client.model.UpdateOptions;
+import com.mongodb.client.result.UpdateResult;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.json.JsonWriterSettings;
+
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.*;
+
+public class Update {
+
+    public static void main(String[] args) {
+        JsonWriterSettings prettyPrint = JsonWriterSettings.builder().indent(true).build();
+
+        try (MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"))) {
+            MongoDatabase sampleTrainingDB = mongoClient.getDatabase("sample_training");
+            MongoCollection<Document> gradesCollection = sampleTrainingDB.getCollection("grades");
+
+            // update one document
+            Bson filter = eq("student_id", 10000);
+            Bson updateOperation = set("comment", "You should learn MongoDB!");
+            UpdateResult updateResult = gradesCollection.updateOne(filter, updateOperation);
+            System.out.println("=> Updating the doc with {\"student_id\":10000}. Adding comment.");
+            System.out.println(gradesCollection.find(filter).first().toJson(prettyPrint));
+            System.out.println(updateResult);
+
+            // upsert
+            filter = and(eq("student_id", 10002d), eq("class_id", 10d));
+            updateOperation = push("comments", "You will learn a lot if you read the MongoDB blog!");
+            UpdateOptions options = new UpdateOptions().upsert(true);
+            updateResult = gradesCollection.updateOne(filter, updateOperation, options);
+            System.out.println("\n=> Upsert document with {\"student_id\":10002.0, \"class_id\": 10.0} because it doesn't exist yet.");
+            System.out.println(updateResult);
+            System.out.println(gradesCollection.find(filter).first().toJson(prettyPrint));
+
+            // update many documents
+            filter = eq("student_id", 10001);
+            updateResult = gradesCollection.updateMany(filter, updateOperation);
+            System.out.println("\n=> Updating all the documents with {\"student_id\":10001}.");
+            System.out.println(updateResult);
+
+            // findOneAndUpdate
+            filter = eq("student_id", 10000);
+            Bson update1 = inc("x", 10); // increment x by 10. As x doesn't exist yet, x=10.
+            Bson update2 = rename("class_id", "new_class_id"); // rename variable "class_id" in "new_class_id".
+            Bson update3 = mul("scores.0.score", 2); // multiply the first score in the array by 2.
+            Bson update4 = addToSet("comments", "This comment is uniq"); // creating an array with a comment.
+            Bson update5 = addToSet("comments", "This comment is uniq"); // using addToSet so no effect.
+            Bson updates = combine(update1, update2, update3, update4, update5);
+            // returns the old version of the document before the update.
+            Document oldVersion = gradesCollection.findOneAndUpdate(filter, updates);
+            System.out.println("\n=> FindOneAndUpdate operation. Printing the old version by default:");
+            System.out.println(oldVersion.toJson(prettyPrint));
+
+            // but I can also request the new version
+            filter = eq("student_id", 10001);
+            FindOneAndUpdateOptions optionAfter = new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER);
+            Document newVersion = gradesCollection.findOneAndUpdate(filter, updates, optionAfter);
+            System.out.println("\n=> FindOneAndUpdate operation. But we can also ask for the new version of the doc:");
+            System.out.println(newVersion.toJson(prettyPrint));
+        }
+    }
+}
+```
+
+2.  Run this example command/class to execute:
+```
+mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Update" -Dmongodb.uri="mongodb+srv://USERNAME:PASSWORD@wt-cluster-0.k0k8u7u.mongodb.net/?retryWrites=true&w=majority" -Dexec.cleanupDaemonThreads=false
+```
+
+3.  Output example:
+```
+=> Updating the doc with {"student_id":10000}. Adding comment.
+23:11:27.611 [com.mongodb.quickstart.Update.main()] DEBUG org.mongodb.driver.protocol.command - Sending command '{"find": "grades", "filter": {"student_id": 10000}, "limit": 1, "singleBatch": true, "$db": "sample_training", "$clusterTime": {"clusterTime": {"$timestamp": {"t": 1690211487, "i": 7}}, "signature": {"hash": {"$binary": {"base64": "msM3OL51kemms3RcwSxj8a1RjGI=", "subType": "00"}}, "keyId": 7204913235105939459}}, "lsid": {"id": {"$binary": {"base64": "ei7XXk4eSMqBQECoJQ+C8Q==", "subType": "04"}}}}' with request id 14 to database sample_training on connection [connectionId{localValue:7, serverValue:4057}] to server ac-bszzhwt-shard-00-02.k0k8u7u.mongodb.net:27017
+23:11:27.689 [com.mongodb.quickstart.Update.main()] DEBUG org.mongodb.driver.protocol.command - Execution of command with request id 14 completed successfully in 78.55 ms on connection [connectionId{localValue:7, serverValue:4057}] to server ac-bszzhwt-shard-00-02.k0k8u7u.mongodb.net:27017
+23:11:27.694 [com.mongodb.quickstart.Update.main()] DEBUG org.mongodb.driver.operation - Received batch of 1 documents with cursorId 0 from server ac-bszzhwt-shard-00-02.k0k8u7u.mongodb.net:27017
+{
+  "_id": {
+    "$oid": "64bce76d77d04766ae0279a6"
+  },
+  "student_id": 10000.0,
+  "class_id": 1.0,
+  "scores": [
+    {
+      "type": "exam",
+      "score": 14.079652517497598
+    },
+    {
+      "type": "quiz",
+      "score": 70.22611310417194
+    },
+    {
+      "type": "homework",
+      "score": 37.2895109669653
+    },
+    {
+      "type": "homework",
+      "score": 46.66607584649181
+    }
+  ],
+  "comment": "You should learn MongoDB!"
+}
+AcknowledgedUpdateResult{matchedCount=1, modifiedCount=1, upsertedId=null}
+
+=> Upsert document with {"student_id":10002.0, "class_id": 10.0} because it doesn't exist yet.
+AcknowledgedUpdateResult{matchedCount=0, modifiedCount=0, upsertedId=BsonObjectId{value=64be949f17c938c272f6bc8b}}
+23:11:27.820 [com.mongodb.quickstart.Update.main()] DEBUG org.mongodb.driver.protocol.command - Sending command '{"find": "grades", "filter": {"$and": [{"student_id": 10002.0}, {"class_id": 10.0}]}, "limit": 1, "singleBatch": true, "$db": "sample_training", "$clusterTime": {"clusterTime": {"$timestamp": {"t": 1690211487, "i": 13}}, "signature": {"hash": {"$binary": {"base64": "msM3OL51kemms3RcwSxj8a1RjGI=", "subType": "00"}}, "keyId": 7204913235105939459}}, "lsid": {"id": {"$binary": {"base64": "ei7XXk4eSMqBQECoJQ+C8Q==", "subType": "04"}}}}' with request id 16 to database sample_training on connection [connectionId{localValue:7, serverValue:4057}] to server ac-bszzhwt-shard-00-02.k0k8u7u.mongodb.net:27017
+23:11:27.902 [com.mongodb.quickstart.Update.main()] DEBUG org.mongodb.driver.protocol.command - Execution of command with request id 16 completed successfully in 82.20 ms on connection [connectionId{localValue:7, serverValue:4057}] to server ac-bszzhwt-shard-00-02.k0k8u7u.mongodb.net:27017
+23:11:27.902 [com.mongodb.quickstart.Update.main()] DEBUG org.mongodb.driver.operation - Received batch of 1 documents with cursorId 0 from server ac-bszzhwt-shard-00-02.k0k8u7u.mongodb.net:27017
+{
+  "_id": {
+    "$oid": "64be949f17c938c272f6bc8b"
+  },
+  "class_id": 10.0,
+  "student_id": 10002.0,
+  "comments": [
+    "You will learn a lot if you read the MongoDB blog!"
+  ]
+}
+
+=> Updating all the documents with {"student_id":10001}.
+AcknowledgedUpdateResult{matchedCount=10, modifiedCount=10, upsertedId=null}
+23:11:28.180 [com.mongodb.quickstart.Update.main()] DEBUG org.mongodb.driver.protocol.command - Sending command '{"findAndModify": "grades", "query": {"student_id": 10000}, "new": false, "update": {"$inc": {"x": 10}, "$rename": {"class_id": "new_class_id"}, "$mul": {"scores.0.score": 2}, "$addToSet": {"comments": "This comment is uniq"}}, "writeConcern": {"w": "majority"}, "txnNumber": 3, "$db": "sample_training", "$clusterTime": {"clusterTime": {"$timestamp": {"t": 1690211488, "i": 11}}, "signature": {"hash": {"$binary": {"base64": "NNAxEXWAP3Z7m4ratELp9s/+kkw=", "subType": "00"}}, "keyId": 7204913235105939459}}, "lsid": {"id": {"$binary": {"base64": "ei7XXk4eSMqBQECoJQ+C8Q==", "subType": "04"}}}}' with request id 18 to database sample_training on connection [connectionId{localValue:7, serverValue:4057}] to server ac-bszzhwt-shard-00-02.k0k8u7u.mongodb.net:27017
+23:11:28.277 [com.mongodb.quickstart.Update.main()] DEBUG org.mongodb.driver.protocol.command - Execution of command with request id 18 completed successfully in 96.98 ms on connection [connectionId{localValue:7, serverValue:4057}] to server ac-bszzhwt-shard-00-02.k0k8u7u.mongodb.net:27017
+
+=> FindOneAndUpdate operation. Printing the old version by default:
+{
+  "_id": {
+    "$oid": "64bce76d77d04766ae0279a6"
+  },
+  "student_id": 10000.0,
+  "class_id": 1.0,
+  "scores": [
+    {
+      "type": "exam",
+      "score": 14.079652517497598
+    },
+    {
+      "type": "quiz",
+      "score": 70.22611310417194
+    },
+    {
+      "type": "homework",
+      "score": 37.2895109669653
+    },
+    {
+      "type": "homework",
+      "score": 46.66607584649181
+    }
+  ],
+  "comment": "You should learn MongoDB!"
+}
+
+=> FindOneAndUpdate operation. But we can also ask for the new version of the doc:
+{
+  "_id": {
+    "$oid": "64bce76d77d04766ae0279ad"
+  },
+  "student_id": 10001.0,
+  "scores": [
+    {
+      "type": "exam",
+      "score": 172.80411865397443
+    },
+    {
+      "type": "quiz",
+      "score": 16.569444160278845
+    },
+    {
+      "type": "homework",
+      "score": 25.966745021851466
+    },
+    {
+      "type": "homework",
+      "score": 19.799725100634014
+    }
+  ],
+  "comments": [
+    "You will learn a lot if you read the MongoDB blog!",
+    "This comment is uniq"
+  ],
+  "new_class_id": 7.0,
+  "x": 10
+}
+```
+
+### 5 - Delete operations of deleting 1 document, FindOneAndDelete() i.e. retrieve 1 doc and delete it in a single atomic operation, deleting multiple docs and deleting a collection using drop() method
+1.  Java code
+```
+package com.mongodb.quickstart;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.json.JsonWriterSettings;
+
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.gte;
+
+public class Delete {
+
+    public static void main(String[] args) {
+        try (MongoClient mongoClient = MongoClients.create(System.getProperty("mongodb.uri"))) {
+            MongoDatabase sampleTrainingDB = mongoClient.getDatabase("sample_training");
+            MongoCollection<Document> gradesCollection = sampleTrainingDB.getCollection("grades");
+
+            // delete one document
+            Bson filter = eq("student_id", 10000);
+            DeleteResult result = gradesCollection.deleteOne(filter);
+            System.out.println(result);
+
+            // findOneAndDelete operation
+            filter = eq("student_id", 10002);
+            Document doc = gradesCollection.findOneAndDelete(filter);
+            System.out.println(doc.toJson(JsonWriterSettings.builder().indent(true).build()));
+
+            // delete many documents
+            filter = gte("student_id", 10000);
+            result = gradesCollection.deleteMany(filter);
+            System.out.println(result);
+
+            // delete the entire collection and its metadata (indexes, chunk metadata, etc).
+            gradesCollection.drop();
+        }
+    }
+}
+```
+
+2.  Run this example command/class to execute:
+```
+mvn compile exec:java -Dexec.mainClass="com.mongodb.quickstart.Delete" -Dmongodb.uri="mongodb+srv://USERNAME:PASSWORD@wt-cluster-0.k0k8u7u.mongodb.net/?retryWrites=true&w=majority" -Dexec.cleanupDaemonThreads=false
+```
+
+3.  Output example:
+```
+```
+
+### X - Topics
 1.  Java code
 ```
 ```
